@@ -15,13 +15,36 @@ goto :EOF
 #  Edit the list below to change the subfolders.
 # ==============================================================================
 
-$SubFolders = @('00_Archive', '01_Codes', '02_Data', '03_Output')
+$SubFolders = @('01_Codes', '02_Data', '03_Output')
 
 Add-Type -AssemblyName System.Windows.Forms, System.Drawing
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
 function Show-Msg($text, $icon = 'Information', $buttons = 'OK') {
     [System.Windows.Forms.MessageBox]::Show($text, 'Create Project Folders', $buttons, $icon)
+}
+
+function New-ProjectStructure($root) {
+    # Create top level folders
+    foreach ($sf in $SubFolders) {
+        $sfPath = Join-Path $root $sf
+        New-Item -ItemType Directory -Path $sfPath -Force -ErrorAction Stop | Out-Null
+        
+        # Each of 01_Codes, 02_Data, 03_Output gets 00_Archive
+        New-Item -ItemType Directory -Path (Join-Path $sfPath '00_Archive') -Force -ErrorAction Stop | Out-Null
+    }
+    
+    # 02_Data specific subfolders
+    $dataPath = Join-Path $root '02_Data'
+    New-Item -ItemType Directory -Path (Join-Path $dataPath '01_Raw') -Force -ErrorAction Stop | Out-Null
+    New-Item -ItemType Directory -Path (Join-Path $dataPath '02_Clean') -Force -ErrorAction Stop | Out-Null
+    
+    # 03_Output specific subfolders
+    $outputPath = Join-Path $root '03_Output'
+    New-Item -ItemType Directory -Path (Join-Path $outputPath '01_Table') -Force -ErrorAction Stop | Out-Null
+    New-Item -ItemType Directory -Path (Join-Path $outputPath '02_Figures') -Force -ErrorAction Stop | Out-Null
+    New-Item -ItemType Directory -Path (Join-Path $outputPath '03_Raw_Research') -Force -ErrorAction Stop | Out-Null
+    New-Item -ItemType Directory -Path (Join-Path $outputPath '04_Submission') -Force -ErrorAction Stop | Out-Null
 }
 
 # ---------------- Build the pop-up form ----------------
@@ -117,13 +140,25 @@ while ($true) {
 
 try {
     New-Item -ItemType Directory -Path $target -Force -ErrorAction Stop | Out-Null
-    foreach ($sf in $SubFolders) {
-        New-Item -ItemType Directory -Path (Join-Path $target $sf) -Force -ErrorAction Stop | Out-Null
-    }
+    New-ProjectStructure $target
 } catch {
     Show-Msg "Could not create the folders:`n$($_.Exception.Message)" 'Error' | Out-Null
     exit 1
 }
 
-Show-Msg ("Created:`n$target`n`n" + (($SubFolders | ForEach-Object { "   - $_" }) -join "`n")) | Out-Null
+$structure = @(
+    "01_Codes/",
+    "   └── 00_Archive/",
+    "02_Data/",
+    "   ├── 00_Archive/",
+    "   ├── 01_Raw/",
+    "   └── 02_Clean/",
+    "03_Output/",
+    "   ├── 00_Archive/",
+    "   ├── 01_Table/",
+    "   ├── 02_Figures/",
+    "   ├── 03_Raw_Research/",
+    "   └── 04_Submission/"
+)
+Show-Msg ("Created:`n$target`n`n" + ($structure -join "`n")) | Out-Null
 Start-Process explorer.exe -ArgumentList "`"$target`""

@@ -19,10 +19,18 @@ The script creates the following structure:
 
 ```text
 Research Project/
-├── 00_Archive/
 ├── 01_Codes/
+│   └── 00_Archive/
 ├── 02_Data/
+│   ├── 00_Archive/
+│   ├── 01_Raw/
+│   └── 02_Clean/
 └── 03_Output/
+    ├── 00_Archive/
+    ├── 01_Table/
+    ├── 02_Figures/
+    ├── 03_Raw_Research/
+    └── 04_Submission/
 ```
 
 ## Requirements
