@@ -105,4 +105,6 @@ See the `LICENSE` file for the terms under which this project may be used, modif
 
 ---
 
-Developed by **Arman Mahmud**.
+Developed by:
+**Arman Mahmud** </br>
+Web: [arman-mahmud.com](https://www.arman-mahmud.com)
