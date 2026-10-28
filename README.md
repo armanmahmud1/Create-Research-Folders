@@ -92,7 +92,7 @@ This utility may be useful for:
 
 ## Version
 
-**Current release:** v1.0.0
+**Current release:** v1.2.0
 
 See the [Releases](../../releases) page for available versions and updates.
 
