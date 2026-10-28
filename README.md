@@ -25,12 +25,13 @@ Research Project/
 │   ├── 00_Archive/
 │   ├── 01_Raw/
 │   └── 02_Clean/
-└── 03_Output/
-    ├── 00_Archive/
-    ├── 01_Table/
-    ├── 02_Figures/
-    ├── 03_Raw_Research/
-    └── 04_Submission/
+├── 03_Output/
+│   ├── 00_Archive/
+│   ├── 01_Table/
+│   ├── 02_Figures/
+│   └── 03_Raw_Research/
+└── 04_Submission/
+    └── 00_Archive/
 ```
 
 ## Requirements

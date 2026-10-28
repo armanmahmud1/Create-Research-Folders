@@ -15,7 +15,7 @@ goto :EOF
 #  Edit the list below to change the subfolders.
 # ==============================================================================
 
-$SubFolders = @('01_Codes', '02_Data', '03_Output')
+$SubFolders = @('01_Codes', '02_Data', '03_Output', '04_Submission')
 
 Add-Type -AssemblyName System.Windows.Forms, System.Drawing
 [System.Windows.Forms.Application]::EnableVisualStyles()
@@ -44,7 +44,6 @@ function New-ProjectStructure($root) {
     New-Item -ItemType Directory -Path (Join-Path $outputPath '01_Table') -Force -ErrorAction Stop | Out-Null
     New-Item -ItemType Directory -Path (Join-Path $outputPath '02_Figures') -Force -ErrorAction Stop | Out-Null
     New-Item -ItemType Directory -Path (Join-Path $outputPath '03_Raw_Research') -Force -ErrorAction Stop | Out-Null
-    New-Item -ItemType Directory -Path (Join-Path $outputPath '04_Submission') -Force -ErrorAction Stop | Out-Null
 }
 
 # ---------------- Build the pop-up form ----------------
@@ -157,8 +156,9 @@ $structure = @(
     "   ├── 00_Archive/",
     "   ├── 01_Table/",
     "   ├── 02_Figures/",
-    "   ├── 03_Raw_Research/",
-    "   └── 04_Submission/"
+    "   └── 03_Raw_Research/",
+    "04_Submission/",
+    "   └── 00_Archive/"
 )
 Show-Msg ("Created:`n$target`n`n" + ($structure -join "`n")) | Out-Null
 Start-Process explorer.exe -ArgumentList "`"$target`""
